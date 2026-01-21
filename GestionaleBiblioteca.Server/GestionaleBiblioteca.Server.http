@@ -1,0 +1,6 @@
+@GestionaleBiblioteca.Server_HostAddress = http://localhost:5277
+
+GET {{GestionaleBiblioteca.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
