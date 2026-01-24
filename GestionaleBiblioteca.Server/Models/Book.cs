@@ -15,6 +15,11 @@ namespace GestionaleBiblioteca.Server.Models
         public string Title { get; set; } = string.Empty;
 
         /// <summary>
+        /// Genre of the book.
+        /// </summary>
+        public string Genre { get; set; } = string.Empty;
+        
+        /// <summary>
         /// Author ID.
         /// </summary>
         public int AuthorId { get; set; }
@@ -22,7 +27,7 @@ namespace GestionaleBiblioteca.Server.Models
         /// <summary>
         /// Author navigation property.
         /// </summary>
-        public Author Author { get; set; } = null!; // Navigation property
+        public virtual Author? Author { get; set; } = null!; // Navigation property
 
         /// <summary>
         /// Year the book was published.

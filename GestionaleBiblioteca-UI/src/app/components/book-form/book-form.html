@@ -1,0 +1,63 @@
+<div class="card shadow-sm mb-4">
+  <div class="card-header bg-primary text-white">
+    <h4 class="mb-0">
+    {{ newBook.id > 0 ? '📝 Modifica Libro' : '➕ Aggiungi Nuovo Libro' }}
+  </h4>
+  </div>
+  <div class="card-body">
+    <form (ngSubmit)="saveBook()" #bookForm="ngForm">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Titolo</label>
+          <input type="text" class="form-control" [(ngModel)]="newBook.title" name="title" required placeholder="Es. 1984">
+        </div>
+        <div class="col-md-4 mb-3">
+  <label class="form-label text-muted small">Genere</label>
+  <input type="text" class="form-control" [(ngModel)]="newBook.genre" name="genre" placeholder="Es: Romanzo, Fantasy...">
+</div>
+        <div class="col-md-2 mb-3">
+          <label class="form-label">Anno</label>
+          <input type="number" class="form-control" [(ngModel)]="newBook.publishingYear" name="publishingYear">
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <label class="form-label">Autore</label>
+          <select class="form-select" [(ngModel)]="newBook.authorId" name="authorId" required>
+            <option value="0" disabled>Scegli un autore...</option>
+            <option *ngFor="let a of authors" [value]="a.id">
+              {{ a.name }} {{ a.surname }}
+            </option>
+          </select>
+          <button class="btn btn-outline-secondary" type="button" (click)="showAuthorFields = !showAuthorFields">
+      <i class="bi" [ngClass]="showAuthorFields ? 'bi-x-lg' : 'bi-plus-lg'"></i>
+    </button>
+        </div>
+      </div>
+
+      @if (showAuthorFields) {
+  <div class="card bg-light mb-3">
+    <div class="card-body">
+      <h6>Nuovo Autore</h6>
+      <div class="row g-2">
+        <div class="col">
+          <input type="text" class="form-control form-control-sm" placeholder="Nome" [(ngModel)]="newAuthor.name" name="authName">
+        </div>
+        <div class="col">
+          <input type="text" class="form-control form-control-sm" placeholder="Cognome" [(ngModel)]="newAuthor.surname" name="authSurname">
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-primary btn-sm" (click)="saveAuthor()">Crea</button>
+        </div>
+      </div>
+    </div>
+  </div>
+      }
+      <div class="text-end">
+        <button type="submit" class="btn btn-success">
+  <i class="bi" [ngClass]="newBook.id > 0 ? 'bi-check-lg' : 'bi-plus-lg'"></i>
+  {{ newBook.id > 0 ? 'Aggiorna Libro' : 'Salva Libro' }}
+</button>
+      </div>
+    </form>
+  </div>
+</div>

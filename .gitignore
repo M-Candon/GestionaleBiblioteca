@@ -361,3 +361,15 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Angular specific
+**/node_modules/
+**/.angular/
+**/dist/
+**/browser/
+.vscode/
+
+# SQLite Database
+*.db
+*.db-shm
+*.db-wal

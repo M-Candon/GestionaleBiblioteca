@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Gestione Autori</h2>
+  <button class="btn btn-success" (click)="toggleForm()">
+  {{ showForm ? 'Chiudi' : 'Nuovo Autore' }}
+</button>
+</div>
+
+@if (showForm) {
+  <div class="card bg-light mb-4 shadow-sm border-primary">
+    <div class="card-body">
+      <h6 class="card-title mb-3 text-primary">
+        {{ newAuthor.id > 0 ? '📝 Modifica Autore' : '➕ Nuovo Autore' }}
+      </h6>
+
+      <div class="row g-3">
+        <div class="col-md-5">
+          <label class="form-label small text-muted">Nome</label>
+          <input type="text" class="form-control" [(ngModel)]="newAuthor.name" placeholder="Nome">
+        </div>
+        <div class="col-md-5">
+          <label class="form-label small text-muted">Cognome</label>
+          <input type="text" class="form-control" [(ngModel)]="newAuthor.surname" placeholder="Cognome">
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+          <button class="btn btn-primary w-100" (click)="saveAuthor()">
+            {{ newAuthor.id > 0 ? 'Aggiorna' : 'Salva' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+<div class="card shadow">
+  <table class="table table-hover mb-0">
+    <thead class="table-dark">
+      <tr>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th class="text-end">Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (a of authors; track a.id) {
+        <tr>
+          <td>{{ a.name }}</td>
+          <td>{{ a.surname }}</td>
+          <td class="text-end">
+  <button class="btn btn-warning btn-sm me-2" (click)="editAuthor(a)">
+    <i class="bi bi-pencil"></i> Modifica
+  </button>
+  <button class="btn btn-outline-danger btn-sm" (click)="deleteAuthor(a.id)">
+    <i class="bi bi-trash"></i> Elimina
+  </button>
+</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

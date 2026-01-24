@@ -5,7 +5,11 @@ namespace GestionaleBiblioteca.Server.Data
     public class LibraryContext : DbContext
     {
         #region Constructors
-        
+
+        /// <summary>
+        /// Creates a new instance of <see cref="LibraryContext"/>.
+        /// </summary>
+        /// <param name="options">Db options.</param>
         public LibraryContext(DbContextOptions<LibraryContext> options)
             : base(options)
         {

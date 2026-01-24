@@ -16,7 +16,7 @@ public class BooksController : ControllerBase
     /// <summary>
     /// Creates a new instance of the booksController.
     /// </summary>
-    /// <param name="context"></param>
+    /// <param name="context">Instance of <see cref="LibraryContext"/>.</param>
     public BooksController(LibraryContext context)
     {
         _context = context;
@@ -41,7 +41,7 @@ public class BooksController : ControllerBase
     /// <summary>
     /// Adds a new book to the library.
     /// </summary>
-    /// <param name="libro"></param>
+    /// <param name="book"></param>
     [HttpPost]
     public async Task<IActionResult> Add(Book book)
     {
@@ -62,5 +62,45 @@ public class BooksController : ControllerBase
         var libro = await _context.Books.FindAsync(id); // Search by primary key
         if (libro == null) return NotFound(); // Return 404 if not found
         return Ok(libro); // Return book as JSON
+    }
+
+    /// <summary>
+    /// Deletes a book by ID.
+    /// </summary>
+    /// <param name="id">ID of the book to be removed.</param>
+    /// <returns></returns>
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteBook(int id)
+    {
+        var book = await _context.Books.FindAsync(id);
+        if (book == null)
+        {
+            return NotFound();
+        }
+
+        _context.Books.Remove(book);
+        await _context.SaveChangesAsync();
+
+        return NoContent(); // Returns 204 (success)
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateBook(int id, Book book)
+    {
+        if (id != book.Id) return BadRequest();
+
+        _context.Entry(book).State = EntityState.Modified;
+
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!_context.Books.Any(e => e.Id == id)) return NotFound();
+            else throw;
+        }
+
+        return NoContent();
     }
 }
